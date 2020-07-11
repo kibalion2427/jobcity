@@ -1,0 +1,23 @@
+import React from "react";
+import { registerRootComponent } from "expo";
+import App from "./App";
+
+// import ApolloClient, { createNetworkInterface } from "apollo-client";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
+import gql from "graphql-tag";
+
+const Client = () => {
+  const client = new ApolloClient({
+    uri: `http://localhost:3000/graphql`,
+  });
+  return (
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  );
+};
+
+registerRootComponent(Client);
+
+// "main": "node_modules/expo/AppEntry.js",

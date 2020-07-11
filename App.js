@@ -1,74 +1,45 @@
-import DateTimePicker from "@react-native-community/datetimepicker";
-import React, { useState } from "react";
-import { View, Button, Platform, StyleSheet, TextInput } from "react-native";
+import React, { Component, useState } from "react";
+import { View, Button, Platform, StyleSheet } from "react-native";
+import { AppRegistry } from "react-native";
+import { registerRootComponent } from "expo";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
 
-const App = () => {
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(false);
-  const [text, onChangeText] = useState("Enter your name");
+import Summary from "./components/airport/summary";
+import Passenger from "./components/airport/passenger";
+import Flight from "./components/airport/flight";
+import PrintButton from "./components/airport/print";
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
-    setDate(currentDate);
-  };
+import { graphql } from "react-apollo";
+// import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 
-  const showMode = currentMode => {
-    setShow(true);
-    setMode(currentMode);
-  };
+// class App extends Component {
 
-  const showDatepicker = () => {
-    showMode("date");
-  };
-
-  const showTimepicker = () => {
-    showMode("time");
-  };
-
-  return (
-    <View>
-      <View style={styles.Button}>
-        <Button title="Show datePicker" onPress={showDatepicker} />
-      </View>
-      <View style={styles.Button}>
-        <Button title="Show timePicker" onPress={showTimepicker} />
-      </View>
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          timeZoneOffsetInMinutes={0}
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onChange}
-        />
-      )}
-      {/* <separator /> */}
-      <View>
-        <TextInput
-          value={text}
-          style={styles.Text}
-          onChangeText={text => onChangeText(text)}
-        />
-      </View>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  Button: {
-    marginTop: 30
-  },
-  Text: {
-    borderColor: "gray",
-    borderWidth: 1,
-    height: 40,
-    marginTop: 50,
-    fontSize: 30
-  }
+const client = new ApolloClient({
+  uri: `http://192.168.100.3:3000/graphql`,
 });
 
-export default App;
+const App = () => {
+  return (
+    <ApolloProvider client={client}>
+      <View style={styles.Screen}>
+        <Summary />
+        <Flight />
+        <Passenger />
+        <PrintButton />
+        {/* <ExchangeRateView /> */}
+      </View>
+    </ApolloProvider>
+  );
+};
+// }
+
+const styles = StyleSheet.create({
+  Screen: { paddingTop: 24, flex: 1 },
+});
+
+// AppRegistry.registerComponent("App", () => App);
+registerRootComponent(App);
+// export default App;

@@ -1,5 +1,5 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "./App.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -8,11 +8,16 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
     "@react-native-community/datetimepicker": "^2.2.3",
+    "apollo-client": "^2.6.10",
     "expo": "~36.0.0",
+    "graphql": "^15.3.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native-ionicons": "^4.6.5",
+    "react-native-svg": "9.13.3",
     "react-native-web": "~0.11.7"
   },
   "devDependencies": {
